@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if list == "ol" %}
+        <ol>
+        {% for name in names %}
+            <li>{{name}}</li>
+        {% endfor %}
+        </ol>
+    {% else %}
+            <ul>
+            {% for name in names %}
+                <li>{{name}}</li>
+            {% endfor %}
+            </ul>
+    {% endif %}
+{% endblock %}
