@@ -3,12 +3,12 @@
 {% block content %}
     {% if "инженер" in prof %}
         <h2>Тренажеры для инженеров</h2>
-        <img src="static\images\ing.png">
+        <img src="{{ url_for('static', filename='images/ing.png') }}">
   {% elif "строитель" in prof %}
         <h2>Тренажеры для строитлей</h2>
-        <img src="static\images\ing.png">
+        <img src="{{ url_for('static', filename='images/ing.png') }}">
  {% else %}
-       <h2>Научные симуляторы</h2>
-        <img src="static\images\sci.png">
+        <h2>Научные симуляторы</h2>
+        <img src="{{ url_for('static', filename='images/sci.png') }}">
  {% endif %}
 {% endblock %}
