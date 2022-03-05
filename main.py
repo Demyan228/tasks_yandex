@@ -21,6 +21,8 @@ def training(prof):
 
 @app.route('/list_prof/<list>')
 def list_prof(list):
+    if list != "ol" and list != "ul":
+        return "Неправильный параметр"
     return render_template("list_prof.html", names=professions, list=list)
 
 if __name__ == '__main__':
