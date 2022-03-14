@@ -1,29 +1,36 @@
-from flask import Flask, render_template
+from flask import Flask
+from data import db_session
+from data.users import User
+
 
 app = Flask(__name__)
-professions = ['инженер-исследователь', 'пилот', 'строитель', 'экзобиолог', 'врач',
-                   'инженер по терраформированию', 'климатолог',
-                   'специалист по радиационной защите', 'астрогеолог', 'гляциолог',
-                   'инженер жизнеобеспечения', 'метеоролог', 'оператор марсохода', 'киберинженер',
-                   'штурман', 'пилот дронов']
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+user1 = ["Scott", "Ridley", 21, "captain", "research engineer", "module_1", "scott_chief@mars.org"]
+user2 = ["kuzbuk", "kuzbukov", 24, "lox", "klown", "v_kosmose", "salam@mars.org"]
+user3 = ["abdul", "abdulov", 13, "lox", "klown", "xz", "net@mars.org"]
+my_users = [user1, user2, user3]
 
 
-@app.route('/<title>')
-@app.route('/index/<title>')
-def index(title):
-    return render_template("base.html", title=title)
+def create_user(db_sess, params):
+    user = User()
+    user.surname = params[0]
+    user.name = params[1]
+    user.age = params[2]
+    user.position = params[3]
+    user.speciality = params[4]
+    user.address = params[5]
+    user.email = params[6]
+    db_sess.add(user)
+    db_sess.commit()
 
 
-@app.route('/training/<prof>')
-def training(prof):
-    return render_template("index.html", prof=prof)
+def main():
+    db_session.global_init("db/blogs.db")
+    db_sess = db_session.create_session()
+    for u in my_users:
+        create_user(db_sess, u)
+    app.run()
 
-
-@app.route('/list_prof/<list>')
-def list_prof(list):
-    if list != "ol" and list != "ul":
-        return "Неправильный параметр"
-    return render_template("list_prof.html", names=professions, list=list)
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    main()
